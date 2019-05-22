@@ -1,13 +1,17 @@
 class Gun {
   PImage gunImage;
   int type, height, width;
-  
+  float frame = 0.00f;
   Gun(int type) {
     this.type = type;
     this.gunImage = loadImage("guns/gun" + nf(type, 4) + ".png");
     
     this.width = this.gunImage.width;
     this.height = this.gunImage.height;
+  }
+  
+  void update() {
+    this.frame += 0.15;
   }
   
   void render(int x, int y, int dir) {
