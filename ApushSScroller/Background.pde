@@ -2,9 +2,9 @@ class Background {
   PImage s1background;
   PImage s2background;
   int  width, height, displaywidth, displayheight;
-  boolean stage1clear;
-  boolean stage2clear;
-  boolean first;
+  boolean stage1clear=false;;
+  boolean stage2clear=false;;
+  boolean first=false;
   boolean other = true;
   boolean end = false;
   int gstate = 0;
@@ -20,7 +20,14 @@ class Background {
 
   void display(int x, int y, int xshift, Player player) {
     println(x+xshift);
-    if((x+xshift>=7700 && !stage1clear && other && gstate==0) || (end == true && !stage1clear && other)){
+    if(player.health<=0){
+      background(255);
+      fill(0);
+      textAlign(CENTER);
+      text("Game Over.", 450,100);
+      text("Press R to try again.", 450, 200);
+    }
+    else if((x+xshift>=7700 && !stage1clear && other && gstate==0) || (end == true && !stage1clear && other)){
       player.end=true;
       image(s1background.get(7700, y, 900, 500), 0, 0);
       if(player.xv==7){

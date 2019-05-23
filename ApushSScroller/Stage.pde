@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Arrays;
 
 class Stage {
   Platform[] parray;
@@ -35,7 +36,8 @@ class Stage {
       if(i==2){
         c=2;
       }
-    }  
+    }
+    c=1;
     boss1 = new Boss();
   }
   
@@ -89,12 +91,40 @@ class Stage {
     return(maxY);
   }  
   
-  
+  void reset(Player player, Background background){
+    boss1.health=1000;
+    player.health=100;
+    background.other=true;
+    background.first=true;
+    background.gstate=0;
+    background.stage1clear=false;
+    background.stage2clear=false;
+    background.end=false;
+    Arrays.fill( parray, null );
+    Arrays.fill( parray1, null );
+    Arrays.fill( earray, null);
+    parray = new Platform[platnumber];
+    for(int i=0; i<platnumber; i++){
+      parray[i] = new Platform("ssplatforms", rnd.nextInt(12500), rnd.nextInt(300)+120);
+    }  
+    earray = new Enemy[enumber];
+    for(int i=0; i<enumber; i++){
+      earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
+    }  
+    parray1 = new Platform [6];
+    for(int i=0; i<6; i++){
+      parray1[i]= new Platform("ssplatforms", 400*c-250, 150*((i+1)%3)+50);
+      if(i==2){
+        c=2;
+      }
+    }
+    boss1.bbullets.clear();
+  }
   
   void render(int x, int y, int xshift, Background background, Player player) {
     background.display(x, y, xshift, player);
-    if(background.gstate==0){
-      
+    if(player.health>0){
+    if(background.gstate==0){  
     player.bottom = this.checkPCollision(player,parray);
     for(int j=0; j<platnumber; j++){
       parray[j].display(player.xshift);
@@ -119,6 +149,7 @@ class Stage {
         parray1[i].display(0);
       }
       boss1.healthbar.render(boss1.health, boss1.x + boss1.width/2, boss1.y);
+    }
     }
   }
   

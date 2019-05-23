@@ -28,12 +28,13 @@ void setup() {
 void draw() {
   clear();
   background(255);
-
   stage.render(0, 0, player.xshift, background, player);
+  if(player.health>0){
   player.update(stage.bullets);
   player.render();
   stage.updateBullets();
   stage.checkBECollisions(player);
+  }
 }
 
 void keyPressed() {
@@ -52,6 +53,9 @@ void keyPressed() {
   }
   if(key == '3') {
     player.gun.switchWeapons(2);
+  }
+  if(key == 'r') {
+    stage.reset(player, background);
   }
   
 }
