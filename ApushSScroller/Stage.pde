@@ -33,7 +33,6 @@ class Stage {
     }
     System.out.println("ok");
     return(maxY);
-
   }  
   
   int checkECollision(Enemy enemy){
