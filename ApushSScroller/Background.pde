@@ -19,7 +19,6 @@ class Background {
   }
 
   void display(int x, int y, int xshift, Player player) {
-    println(x+xshift);
     if(player.health<=0){
       background(255);
       fill(0);
