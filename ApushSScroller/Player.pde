@@ -41,7 +41,7 @@ class Player{
   void update() {
     this.yv += 2;
     this.y += this.yv;
-    if (this.y > bottom) {
+    if (this.y >= bottom) {
       this.y -= yv;
       if (this.up == true) {
         this.yv = -30;
