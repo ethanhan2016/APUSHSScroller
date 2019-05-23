@@ -95,6 +95,7 @@ class Stage {
       for(int i=0; i<6; i++){
         parray1[i].display(0);
       }
+      boss1.healthbar.render(boss1.health, boss1.x + boss1.width/2, boss1.y);
     }
   }
   
