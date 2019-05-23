@@ -30,7 +30,6 @@ void draw() {
   background(255);
 
   stage.render(0, 0, player.xshift, background, player);
-  player.bottom = stage.checkPCollision(player);
   player.update(stage.bullets);
   player.render();
   stage.updateBullets();

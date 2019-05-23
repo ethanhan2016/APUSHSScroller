@@ -80,9 +80,10 @@ class Player{
   
   void render() {
      if (this.presidentNum == 0) {
-      this.eisenhower.display(100, this.y-this.height, this.dir, frame);
+      this.eisenhower.display(this.x, this.y-this.height, this.dir, frame);
      }
-     this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+     this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
+     this.gun.update(this.x+this.width/2+10,this.y-this.height+22);
      this.gun.render(this.dir);
   }
 }

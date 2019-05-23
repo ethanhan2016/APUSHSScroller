@@ -8,9 +8,11 @@ import java.util.ListIterator;
 
 class Stage {
   Platform[] parray;
+  Platform[] parray1;
   Enemy[] earray;
   int enumber;
   int platnumber;
+  int c = 1;
   List<Bullet> bullets = new ArrayList<Bullet>();
   ListIterator<Bullet> bulletIterator = null;
   
@@ -27,6 +29,14 @@ class Stage {
     for(int i=0; i<enumber; i++){
       earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
     }  
+    parray1 = new Platform [6];
+    for(int i=0; i<6; i++){
+      parray1[i]= new Platform("ssplatforms", 400*c-250, 150*((i+1)%3)+50);
+      if(i==2){
+        c=2;
+      }
+    }  
+    boss1 = new Boss();
   }
   
   void updateBullets() {
@@ -56,11 +66,11 @@ class Stage {
     }
   }
   
-  int checkPCollision(Player player){
+  int checkPCollision(Player player, Platform[] parray0){
     int maxY = 455;
-    for(int a=0; a<platnumber; a++){
-      if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift-player.width && player.x <= parray[a].x-player.xshift+parray[a].width){
-        maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
+    for(int a=0; a<parray0.length; a++){
+      if(player.y <= parray0[a].y && player.x >= parray0[a].x-player.xshift-player.width && player.x <= parray0[a].x-player.xshift+parray0[a].width){
+        maxY = (parray0[a].y < maxY) ? parray0[a].y : maxY;
       }  
     }
     return(maxY);
@@ -81,6 +91,8 @@ class Stage {
   void render(int x, int y, int xshift, Background background, Player player) {
     background.display(x, y, xshift, player);
     if(background.gstate==0){
+      
+    player.bottom = this.checkPCollision(player,parray);
     for(int j=0; j<platnumber; j++){
       parray[j].display(player.xshift);
     }
@@ -96,7 +108,14 @@ class Stage {
     }
     }
     else{
+      player.xshift=0;
+      player.bottom =this.checkPCollision(player,parray1);
+      boss1.update(player);
       boss1.render(player);
+      for(int i=0; i<6; i++){
+        parray1[i].display(0);
+      }
+      boss1.healthbar.render(boss1.health, boss1.x + boss1.width/2, boss1.y);
     }
   }
   
