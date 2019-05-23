@@ -31,7 +31,6 @@ class Boss {
   int bulletdmg = 2;
   List<Bossbullet> bbullets = new ArrayList<Bossbullet>();
   
-  
   Boss() {
     bsprite = loadImage("characters/sputnik.png");
     attack = loadImage("backgrounds/reball.png");

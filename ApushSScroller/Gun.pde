@@ -1,14 +1,17 @@
 import java.util.Random;
+import ddf.minim.*;
 
 class Gun {
   PImage[] gunImages;
   int type, height, width, x, y;
   float cooldown;
   Random rnd = new Random();
+  AudioPlayer[] gunSounds;
   
-  Gun(int type, float cooldown) {
+  Gun(int type, float cooldown, AudioPlayer[] gunSounds) {
     this.type = type;
     this.cooldown = cooldown;
+    this.gunSounds = gunSounds;
     this.gunImages = new PImage[3];
       for(int i = 0; i < 3; i++) {
         gunImages[i] = loadImage("guns/gun" + nf(i, 4) + ".png");
@@ -40,22 +43,23 @@ class Gun {
     popMatrix();
   }
   
-  void fire(List<Bullet> bullets) {
+  void fire(List<Bullet> bullets, int dir) {
     if(this.type == 0) {
-      Bullet bullet = new Bullet(0, this.x, this.y, 20, 0, this.type);
+      Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1) * 20, 0, this.type);
       bullets.add(bullet);
       this.cooldown = 3;
     } else if (this.type == 1) {
-      print("ok \n");
       for (int i = 0; i < 5; i++) {
-        Bullet bullet = new Bullet(0, this.x, this.y, 20, rnd.nextInt(6)-1, this.type);
+        Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1) * 20, rnd.nextInt(6)-1, this.type);
         bullets.add(bullet);
       }
       this.cooldown = 8;
     } else if (this.type == 2) {
-      Bullet bullet = new Bullet(0, this.x, this.y, 30, 0, this.type);
+      Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1)* 30, 0, this.type);
       bullets.add(bullet);
       this.cooldown = 12;
     }
+    this.gunSounds[this.type].rewind();
+    this.gunSounds[this.type].play();
   }
 }

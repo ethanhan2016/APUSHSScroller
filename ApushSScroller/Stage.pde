@@ -4,6 +4,7 @@ Boss boss1;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 class Stage {
   Platform[] parray;
@@ -13,6 +14,8 @@ class Stage {
   int platnumber;
   int c = 1;
   List<Bullet> bullets = new ArrayList<Bullet>();
+  ListIterator<Bullet> bulletIterator = null;
+  
   Random rnd = new Random();
   
   Stage(int platnumber, int enumber) {
@@ -37,11 +40,28 @@ class Stage {
   }
   
   void updateBullets() {
-    for (int i = 0; i < this.bullets.size(); i++) {
-      bullets.get(i).update();
-      bullets.get(i).render();
-      if(bullets.get(i).isOffScreen(900, 500)) {
-        bullets.remove(i);
+    bulletIterator = bullets.listIterator();
+    while(bulletIterator.hasNext()) {
+      Bullet bullet = bulletIterator.next();
+      bullet.update();
+      bullet.render();
+      if(bullet.isOffScreen(900, 500)) {
+        bulletIterator.remove();
+      }
+    }
+  }
+  
+  void checkBECollisions(Player player) {
+    bulletIterator = bullets.listIterator();
+    while(bulletIterator.hasNext()) {
+      Bullet bullet = bulletIterator.next();
+      for (int j = 0; j < this.earray.length; j++) {
+        if(bullet.x >= earray[j].x - player.xshift && bullet.x <= earray[j].x - player.xshift + earray[j].width && bullet.y <= earray[j].y && bullet.y >= earray[j].y - earray[j].height) {
+          earray[j].health -= bullet.damage;
+          if (bullet.type == 0 || bullet.type == 1) {
+            bulletIterator.remove();
+          }
+        }
       }
     }
   }
