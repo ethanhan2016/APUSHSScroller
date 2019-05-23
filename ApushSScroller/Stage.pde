@@ -7,9 +7,11 @@ import java.util.List;
 
 class Stage {
   Platform[] parray;
+  Platform[] parray1;
   Enemy[] earray;
   int enumber;
   int platnumber;
+  int c = 1;
   List<Bullet> bullets = new ArrayList<Bullet>();
   Random rnd = new Random();
   
@@ -23,6 +25,13 @@ class Stage {
     earray = new Enemy[enumber];
     for(int i=0; i<enumber; i++){
       earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
+    }  
+    parray1 = new Platform [6];
+    for(int i=0; i<6; i++){
+      parray1[i]= new Platform("ssplatforms", 400*c-250, 150*((i+1)%3)+50);
+      if(i==2){
+        c=2;
+      }
     }  
     boss1 = new Boss();
   }
@@ -78,6 +87,9 @@ class Stage {
     }
     else{
       boss1.render(player);
+      for(int i=0; i<6; i++){
+        parray1[i].display(0);
+      }
     }
   }
   

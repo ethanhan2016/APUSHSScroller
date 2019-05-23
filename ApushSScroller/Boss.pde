@@ -5,6 +5,12 @@ class Boss {
   float frame = 0.00f;
   PImage bsprite;
   PImage attack;
+  int shootingdir=0;
+  int rotatingspeed=1;
+  int shootingintervals = 30;
+  int shootingxv = 0;
+  int shootingyv = 5;
+  List<Bossbullet> bbullets = new ArrayList<Bossbullet>();
   
   
   Boss() {
@@ -18,6 +24,10 @@ class Boss {
   
   
   void update(Player player) {
+    shootingintervals+=1;
+    shootingdir+=rotatingspeed;
+    Bossbullet bbullet = new Bossbullet(this.x+this.width/2, this.y - this.height/2, shootingxv, shootingyv);
+    bbullets.add(bbullet);
   }
 
   void render(Player player) {
