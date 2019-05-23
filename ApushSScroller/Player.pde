@@ -69,6 +69,12 @@ class Player{
     if(xshift>=0 || (xshift<=0 && this.xv>0)){
       xshift += this.xv; 
     }
+    if(this.x<0){
+      this.x=0;
+    }
+    if(this.x>990-this.width){
+      this.x=990-this.width;
+    }
     if(end && this.x>=0 && this.x <=900-this.width){
       this.x+=this.xv;
     }
