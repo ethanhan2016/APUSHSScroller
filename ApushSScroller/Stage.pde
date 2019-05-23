@@ -15,14 +15,16 @@ class Stage {
   }
   
   int checkPCollision(Player player){
+    int maxY = 455;
     for(int a=0; a<platnumber; a++){
-      if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift && player.x <= parray[a].x-player.xshift+parray[a].width){
-        System.out.println("notok");
-        return(parray[a].y);
+      if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift-player.width && player.x <= parray[a].x-player.xshift+parray[a].width){
+        //System.out.println("notok");
+        //return(parray[a].y);
+        maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
       }  
     }
     System.out.println("ok");
-    return(455);
+    return(maxY);
   }  
 
   void render(int x, int y, int xshift, Background background) {
