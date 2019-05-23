@@ -3,6 +3,8 @@ class Boss {
   int x, y, xv, yv, width, height;
   int health = 1000;
   Healthbar healthbar = new Healthbar(1000, 1, 400, 20);
+  AudioPlayer[] hitSounds;
+  AudioPlayer[] themePlayers;
   float frame = 0.00f;
   PImage bsprite;
   PImage attack;
@@ -31,7 +33,9 @@ class Boss {
   int bulletdmg = 3;
   List<Bossbullet> bbullets = new ArrayList<Bossbullet>();
   
-  Boss() {
+  Boss(AudioPlayer[] hitSounds, AudioPlayer[] themePlayers) {
+    this.hitSounds = hitSounds;
+    this.themePlayers = themePlayers;
     bsprite = loadImage("characters/sputnik.png");
     attack = loadImage("backgrounds/reball.png");
     this.width = this.bsprite.width;
@@ -85,6 +89,16 @@ class Boss {
       if(bbullets.get(i).x>=player.x+5 && bbullets.get(i).x<=player.x+30 && bbullets.get(i).y<=player.y+44 && bbullets.get(i).y>=player.y){
         bbullets.remove(i);
         player.health-=bulletdmg;
+        if(player.health <= 0) {
+          hitSounds[1].rewind();
+          hitSounds[1].play();
+          themePlayers[1].pause();
+          themePlayers[1].rewind();
+          themePlayers[0].loop();
+        } else {
+          hitSounds[0].rewind();
+          hitSounds[0].play();
+        }
       }  
     }
     for(int i=0; i<stage.bullets.size(); i++){

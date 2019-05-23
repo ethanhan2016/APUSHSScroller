@@ -16,10 +16,14 @@ class Stage {
   int c = 1;
   List<Bullet> bullets = new ArrayList<Bullet>();
   ListIterator<Bullet> bulletIterator = null;
+  AudioPlayer[] hitSounds;
+  AudioPlayer[] themePlayers;
   
   Random rnd = new Random();
   
-  Stage(int platnumber, int enumber) {
+  Stage(int platnumber, int enumber, AudioPlayer[] hitSounds, AudioPlayer[] themePlayers) {
+    this.hitSounds = hitSounds;
+    this.themePlayers = themePlayers;
     this.platnumber = platnumber;
     parray = new Platform[platnumber];
     for(int i=0; i<platnumber; i++){
@@ -38,7 +42,7 @@ class Stage {
       }
     }
     c=1;
-    boss1 = new Boss();
+    boss1 = new Boss(this.hitSounds, this.themePlayers);
   }
   
   void updateBullets() {
@@ -62,6 +66,13 @@ class Stage {
           if(bullet.x >= earray[j].x - player.xshift && bullet.x <= earray[j].x - player.xshift + earray[j].width && bullet.y <= earray[j].y && bullet.y >= earray[j].y - earray[j].height) {
             print(bullet.damage);
             earray[j].health -= bullet.damage;
+            if(earray[j].health <= 0) {
+              hitSounds[1].rewind();
+              hitSounds[1].play();
+            } else {
+              hitSounds[0].rewind();
+              hitSounds[0].play();
+            }
             if (bullet.type == 0 || bullet.type == 1) {
               bulletIterator.remove();
               break;
@@ -126,22 +137,29 @@ class Stage {
     background.display(x, y, xshift, player);
     if(player.health>0){
     if(background.gstate==0){  
-    player.bottom = this.checkPCollision(player,parray);
-    for(int j=0; j<platnumber; j++){
-      parray[j].display(player.xshift);
-    }
-    for(int i=0; i<enumber; i++){
-      earray[i].bottom = this.checkECollision(earray[i]);
-      for(int j=0; j<enumber; j++){
-        if(earray[i].checkCollisionOther(earray[j],player)==true && !(i==j)){
-          earray[i].col=true;
-        }
+      player.bottom = this.checkPCollision(player,parray);
+      for(int j=0; j<platnumber; j++){
+        parray[j].display(player.xshift);
       }
-      earray[i].update(player);
-      earray[i].render();
-    }
+      for(int i=0; i<enumber; i++){
+        earray[i].bottom = this.checkECollision(earray[i]);
+        for(int j=0; j<enumber; j++){
+          if(earray[i].checkCollisionOther(earray[j],player)==true && !(i==j)){
+            earray[i].col=true;
+          }
+        }
+        earray[i].update(player);
+        earray[i].render();
+      }
     }
     else{
+      if(themePlayers[0].isLooping()) {
+        themePlayers[0].pause();
+        themePlayers[0].rewind();
+      }
+      if(!themePlayers[1].isLooping()) {
+        themePlayers[1].loop();
+      }
       player.xshift=0;
       player.bottom =this.checkPCollision(player,parray1);
       boss1.update(player, this);
