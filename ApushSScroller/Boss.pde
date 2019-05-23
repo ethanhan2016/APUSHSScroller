@@ -1,4 +1,4 @@
-class boss {
+class Boss {
   int x, y, xv, yv, width, height;
   int health = 100;
   int dir = 1;
@@ -10,7 +10,7 @@ class boss {
   boolean left, right, up;
   float frame = 0.00f;
   
-  boss(int x, int y) {
+  Boss(int x, int y) {
     this.width = this.boss.width;
     this.height = this.boss.height;
     this.x = x;
@@ -57,7 +57,7 @@ class boss {
     col=false;
   }
   
-  boolean checkCollisionOther(boss boss, Player player){
+  boolean checkCollisionOther(Boss boss, Player player){
     if(boss.x-player.xshift<=this.x-player.xshift+this.width+10 && boss.x-player.xshift>=this.x-player.xshift-this.width-10 && (checkCollisionPlayer(player) || boss.close || boss.checkCollisionPlayer(player))){
       this.close=true;
       return true;
@@ -74,7 +74,7 @@ class boss {
     this.close=false;
     return false;
   }  
-  void render() {
+  void render(Player player) {
      this.boss.display(this.x-player.xshift, this.y - this.height, this.dir, frame);
      //this.boss.display(100, this.y-this.height, this.dir, frame);
      this.healthbar.render(this.health, this.x-player.xshift + this.width/2, this.y - this.height);

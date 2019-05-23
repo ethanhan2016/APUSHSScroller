@@ -75,9 +75,11 @@ class Enemy {
     return false;
   }  
   void render() {
-     this.enemy.display(this.x-player.xshift, this.y - this.height, this.dir, frame);
-     //this.enemy.display(100, this.y-this.height, this.dir, frame);
-     this.healthbar.render(this.health, this.x-player.xshift + this.width/2, this.y - this.height);
-     //this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+    if (this.health > 0) {
+       this.enemy.display(this.x-player.xshift, this.y - this.height, this.dir, frame);
+       //this.enemy.display(100, this.y-this.height, this.dir, frame);
+       this.healthbar.render(this.health, this.x-player.xshift + this.width/2, this.y - this.height);
+       //this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+    }
   }
 }

@@ -19,7 +19,7 @@ class Background {
   }
 
   void display(int x, int y, int xshift, Player player) {
-    println(x+xshift);
+    //println(x+xshift);
     if((x+xshift>=7700 && !stage1clear && other) && gstate==0 || (end == true && !stage1clear && other)){
       player.end=true;
       image(s1background.get(7700, y, 900, 500), 0, 0);

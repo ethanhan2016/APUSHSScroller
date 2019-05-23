@@ -6,18 +6,20 @@ class Player{
   int dir = 1;
   int xshift;
   int bottom;
+  Minim minim;;
   Animation eisenhower = new Animation("eisenhower", 2);
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
-  Gun gun = new Gun(1, 3);
+  Gun gun;
   boolean left, right, up;
   boolean end = false;
   float frame = 0.00f;
   
-  Player(int x, int y) {
+  Player(int x, int y, AudioPlayer[] gunSounds) {
     this.width = this.eisenhower.width;
     this.height = this.eisenhower.height;
     this.x = x;
     this.y = y;
+    this.gun = new Gun(0, 3, gunSounds);
   }
   
   boolean setMove(int k, boolean b) {
@@ -41,7 +43,7 @@ class Player{
   
   void fire(List<Bullet> bullets) {
     if(this.gun.cooldown == 0) {
-      this.gun.fire(bullets);
+      this.gun.fire(bullets, this.dir);
     }
   }
   
