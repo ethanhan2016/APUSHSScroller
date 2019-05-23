@@ -46,11 +46,11 @@ class Stage {
     }
   }
   
-  int checkPCollision(Player player){
+  int checkPCollision(Player player, Platform[] parray0){
     int maxY = 455;
-    for(int a=0; a<platnumber; a++){
-      if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift-player.width && player.x <= parray[a].x-player.xshift+parray[a].width){
-        maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
+    for(int a=0; a<parray0.length; a++){
+      if(player.y <= parray0[a].y && player.x >= parray0[a].x-player.xshift-player.width && player.x <= parray0[a].x-player.xshift+parray0[a].width){
+        maxY = (parray0[a].y < maxY) ? parray0[a].y : maxY;
       }  
     }
     return(maxY);
@@ -71,6 +71,8 @@ class Stage {
   void render(int x, int y, int xshift, Background background, Player player) {
     background.display(x, y, xshift, player);
     if(background.gstate==0){
+      
+    player.bottom = this.checkPCollision(player,parray);
     for(int j=0; j<platnumber; j++){
       parray[j].display(player.xshift);
     }
@@ -86,6 +88,8 @@ class Stage {
     }
     }
     else{
+      player.bottom =this.checkPCollision(player,parray1);
+      boss1.update(player);
       boss1.render(player);
       for(int i=0; i<6; i++){
         parray1[i].display(0);
