@@ -4,12 +4,14 @@ Background background;
 Enemy enemy;
 Sound sound;
 Title title;
+Endscreen es;
 int game = 0;
 
 void settings() {
   size(900, 500);
 }
 void setup() {
+  es = new Endscreen();
   sound = new Sound(this);
   title = new Title();
     player = new Player(100, 455, sound.gunSounds);
@@ -28,11 +30,17 @@ void draw() {
     background(255);
     stage.render(0, 0, player.xshift, background, player);
     if(player.health>0){
-      player.update(stage.bullets);
+      player.update(stage.bullets, stage);
       player.render();
       stage.updateBullets();
       stage.checkBECollisions(player);
     }
+    if(stage.bosshealth()<=0){
+      game=2;
+    }
+  }
+  else if (game==2){
+    es.render();
   }
 }
 
