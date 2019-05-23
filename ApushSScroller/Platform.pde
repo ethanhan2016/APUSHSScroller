@@ -16,13 +16,13 @@ class Platform {
 
   void display(int xshift) {
     if(x+xshift>=0){
-      image(platform, this.x-xshift, this.y-this.height);
+      image(platform, this.x-xshift, this.y);
     }
     else if(x+xshift>12500){
-      image(platform, this.x-xshift, this.y-this.height);
+      image(platform, this.x-xshift, this.y);
     }
     else if(x+xshift<0){
-      image(platform, this.x, this.y-this.height);
+      image(platform, this.x, this.y);
     }
   }
   
