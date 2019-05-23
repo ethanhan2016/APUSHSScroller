@@ -88,6 +88,7 @@ class Stage {
     }
     }
     else{
+      player.xshift=0;
       player.bottom =this.checkPCollision(player,parray1);
       boss1.update(player);
       boss1.render(player);
