@@ -39,6 +39,5 @@ class Title {
         game = 1;
       }
     }
-    
   }
 }

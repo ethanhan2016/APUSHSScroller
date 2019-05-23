@@ -122,6 +122,10 @@ class Stage {
     boss1.bbullets.clear();
   }
   
+  int bosshealth(){
+    return boss1.health;
+  }
+  
   void render(int x, int y, int xshift, Background background, Player player) {
     background.display(x, y, xshift, player);
     if(player.health>0){

@@ -28,7 +28,7 @@ class Boss {
   double shootingyv4= 5;
   double shootingxv5 = 0;
   double shootingyv5 = 5;
-  int bulletdmg = 3;
+  int bulletdmg = 4;
   List<Bossbullet> bbullets = new ArrayList<Bossbullet>();
   
   Boss() {

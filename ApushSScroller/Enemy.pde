@@ -1,3 +1,4 @@
+Cbottle cbottle;
 class Enemy {
   int x, y, xv, yv, width, height;
   int health = 100;
@@ -9,17 +10,22 @@ class Enemy {
   Animation enemy = new Animation("scientist", 2);
   Healthbar healthbar = new Healthbar(100, 1, 70, 8);
   boolean left, right, up;
+  boolean cbottleon = false;
   float frame = 0.00f;
+  int attackinterval = 300;
+  
   
   Enemy(int x, int y) {
     this.width = this.enemy.width;
     this.height = this.enemy.height;
     this.x = x;
     this.y = y;
+    cbottle = new Cbottle(0,0,0,0);
   }
   
   
   void update(Player player) {
+    attackinterval+=1;
     this.right=false;
     this.left=false;
     this.up=false;
@@ -56,6 +62,20 @@ class Enemy {
     }
     this.x+=this.xv;
     col=false;
+    if((this.y>=player.y-20 && this.y<=player.y+10 && this.attackinterval>=500 && this.x-player.xshift>=player.x-30 && this.x-player.xshift<=player.x+10 )){
+      cbottle.x=this.x-player.xshift;
+      cbottle.y=this.y-100;
+      if(this.x-player.xshift>player.x){
+      cbottle.xv=-4;
+      }
+      if(this.x-player.xshift<player.x){
+         cbottle.xv=4;
+      }
+      cbottle.yv=20;
+      cbottleon = true;
+      player.health -=1;
+      attackinterval=0;
+    }
   }
   
   boolean checkCollisionOther(Enemy enemy, Player player){
@@ -81,6 +101,12 @@ class Enemy {
        //this.enemy.display(100, this.y-this.height, this.dir, frame);
        this.healthbar.render(this.health, this.x-player.xshift + this.width/2, this.y - this.height);
        //this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+       if(!cbottle.isonbottom(this)){
+         cbottle.render();
+       }
+       else{
+         cbottleon=false;
+       }
     }
   }
 }
