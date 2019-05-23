@@ -1,5 +1,6 @@
 Platform platform;
 Enemy enemyclass;
+Boss boss1;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,13 @@ class Stage {
   Stage(int platnumber, int enumber) {
     this.platnumber = platnumber;
     parray = new Platform[platnumber];
-    for(int i=0; i < platnumber; i++){
-      parray[i] = new Platform("ssplatforms", rnd.nextInt(16500), rnd.nextInt(300)+150);
+    for(int i=0; i<platnumber; i++){
+      parray[i] = new Platform("ssplatforms", rnd.nextInt(12500), rnd.nextInt(300)+120);
     }  
     this.enumber = enumber;
     earray = new Enemy[enumber];
     for(int i=0; i<enumber; i++){
-      earray[i] = new Enemy(rnd.nextInt(16500), rnd.nextInt(300)+150);
+      earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
     }  
   }
   
@@ -59,6 +60,7 @@ class Stage {
   
   void render(int x, int y, int xshift, Background background, Player player) {
     background.display(x, y, xshift, player);
+    if(background.gstate==0){
     for(int j=0; j<platnumber; j++){
       parray[j].display(player.xshift);
     }
@@ -71,6 +73,10 @@ class Stage {
       }
       earray[i].update(player);
       earray[i].render();
+    }
+    }
+    else{
+      boss1.render(player);
     }
   }
   

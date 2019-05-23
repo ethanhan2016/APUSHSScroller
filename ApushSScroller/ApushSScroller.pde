@@ -10,7 +10,7 @@ void setup() {
   player = new Player(100, 455);
   enemy = new Enemy(300, 455);
   background = new Background("ssbackground");
-  stage = new Stage(20, 50);
+  stage = new Stage(15, 30);
 }
 
 void draw() {
