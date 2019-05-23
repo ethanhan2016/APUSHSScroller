@@ -64,10 +64,6 @@ class Player{
     this.x += this.xv;
   }
   
-  void ccheck(Stage stage){
-    this.bottom = stage.checkPCollision(this);
-  }
-  
   void render() {
      if (this.presidentNum == 0) {
       //this.eisenhower.display(this.x, this.y - this.height, this.dir, frame);

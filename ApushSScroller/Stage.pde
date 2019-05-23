@@ -14,13 +14,13 @@ class Stage {
     }  
   }
   
-  int checkPCollision(Player player){
+  void checkPCollision(Player player){
     for(int a=0; a<platnumber; a++){
       if(player.y <= parray[a].y && 100 >= parray[a].x-player.xshift && 100 <= parray[a].x-player.xshift+100){
-        return parray[a].y+10;
+        player.bottom = parray[a].y;
       }  
     }
-    return 455;
+    player.bottom = 455;
   }  
 
   void render(int x, int y, int xshift, Background background) {

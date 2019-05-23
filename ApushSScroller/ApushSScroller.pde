@@ -19,7 +19,7 @@ void draw() {
   line(0,700,1800,700);
   noStroke();
   stage.render(0, 0, player.xshift, background);
-  player.ccheck(stage);
+  stage.checkPCollision(player);
   player.update();
   player.render();
 }
