@@ -58,6 +58,7 @@ class Stage {
       for (int j = 0; j < this.earray.length; j++) {
         if(earray[j].health > 0) {
           if(bullet.x >= earray[j].x - player.xshift && bullet.x <= earray[j].x - player.xshift + earray[j].width && bullet.y <= earray[j].y && bullet.y >= earray[j].y - earray[j].height) {
+            print(bullet.damage);
             earray[j].health -= bullet.damage;
             if (bullet.type == 0 || bullet.type == 1) {
               bulletIterator.remove();

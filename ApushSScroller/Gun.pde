@@ -45,19 +45,19 @@ class Gun {
   
   void fire(List<Bullet> bullets, int dir) {
     if(this.type == 0) {
-      Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1) * 20, 0, this.type);
+      Bullet bullet = new Bullet(this.x, this.y, (2*dir-1) * 20, 0, this.type);
       bullets.add(bullet);
       this.cooldown = 3;
     } else if (this.type == 1) {
       for (int i = 0; i < 5; i++) {
-        Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1) * 20, rnd.nextInt(6)-1, this.type);
+        Bullet bullet = new Bullet(this.x, this.y, (2*dir-1) * 20, rnd.nextInt(6)-1, this.type);
         bullets.add(bullet);
       }
       this.cooldown = 8;
     } else if (this.type == 2) {
-      Bullet bullet = new Bullet(0, this.x, this.y, (2*dir-1)* 30, 0, this.type);
+      Bullet bullet = new Bullet(this.x, this.y, (2*dir-1)* 30, 0, this.type);
       bullets.add(bullet);
-      this.cooldown = 12;
+      this.cooldown = 14;
     }
     this.gunSounds[this.type].rewind();
     this.gunSounds[this.type].play();

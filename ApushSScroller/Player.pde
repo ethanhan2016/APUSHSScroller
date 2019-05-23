@@ -8,6 +8,7 @@ class Player{
   int bottom;
   Minim minim;;
   Animation eisenhower = new Animation("eisenhower", 2);
+  Animation kennedy = new Animation("kennedy", 2);
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
   Gun gun;
   boolean left, right, up;
@@ -15,8 +16,8 @@ class Player{
   float frame = 0.00f;
   
   Player(int x, int y, AudioPlayer[] gunSounds) {
-    this.width = this.eisenhower.width;
-    this.height = this.eisenhower.height;
+    this.width = (this.presidentNum == 0) ? this.eisenhower.width : this.kennedy.width;
+    this.height =(this.presidentNum == 0) ? this.eisenhower.height : this.kennedy.height;
     this.x = x;
     this.y = y;
     this.gun = new Gun(0, 3, gunSounds);
@@ -87,6 +88,8 @@ class Player{
   void render() {
      if (this.presidentNum == 0) {
       this.eisenhower.display(this.x, this.y-this.height, this.dir, frame);
+     } else if (this.presidentNum == 1) {
+       this.kennedy.display(this.x, this.y-this.height, this.dir, frame);
      }
      this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
      this.gun.update(this.x+this.width/2+10,this.y-this.height+22);
