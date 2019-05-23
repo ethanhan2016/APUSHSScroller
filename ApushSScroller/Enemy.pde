@@ -5,6 +5,7 @@ class Enemy {
   int bottom;
   boolean col;
   boolean close = false;
+  int damage;
   Animation enemy = new Animation("scientist", 2);
   Healthbar healthbar = new Healthbar(100, 1, 70, 8);
   boolean left, right, up;
