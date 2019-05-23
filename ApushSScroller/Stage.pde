@@ -24,6 +24,7 @@ class Stage {
     for(int i=0; i<enumber; i++){
       earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
     }  
+    boss1 = new Boss();
   }
   
   void updateBullets() {
