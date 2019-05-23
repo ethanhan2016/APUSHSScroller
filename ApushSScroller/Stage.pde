@@ -31,7 +31,6 @@ class Stage {
         maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
       }  
     }
-    System.out.println("ok");
     return(maxY);
   }  
   
@@ -54,6 +53,12 @@ class Stage {
     }
     for(int i=0; i<enumber; i++){
       earray[i].bottom = this.checkECollision(earray[i]);
+      for(int j=0; j<enumber; j++){
+        if(earray[i].checkCollisionOther(earray[j],player)==true && !(i==j)){
+          earray[i].col=true;
+          println("huh");
+        }
+      }
       earray[i].update(player);
       earray[i].render();
     }
