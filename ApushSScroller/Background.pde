@@ -1,15 +1,18 @@
 class Background {
   PImage s1background;
+  PImage s2background;
   int  width, height, displaywidth, displayheight;
   boolean stage1clear;
   boolean stage2clear;
   boolean first;
+  boolean other = true;
   boolean end = false;
+  int gstate = 0;
   
   Background(String file) {
     String filename = file + ".png";
-    s1background= loadImage("backgrounds/" + filename);
-    
+    s1background = loadImage("backgrounds/" + filename);
+    s2background = loadImage("backgrounds/bossapush.png");
     this.width = s1background.width;
     this.height = s1background.height;
     stage1clear=false;
@@ -17,7 +20,7 @@ class Background {
 
   void display(int x, int y, int xshift, Player player) {
     println(x+xshift);
-    if((x+xshift>=7700 && !stage1clear) || end == true){
+    if((x+xshift>=7700 && !stage1clear && other) && gstate==0 || (end == true && !stage1clear && other)){
       player.end=true;
       image(s1background.get(7700, y, 900, 500), 0, 0);
       if(player.xv==7){
@@ -30,19 +33,60 @@ class Background {
       if(player.x==100){
         end = false;
       }
+      if(player.x>=800){
+        stage1clear=true;
+        end = false;
+        first = true;
+      }
     }
-    else if(stage1clear && first && !end){
+    else if(stage1clear && first && !end && other && gstate==0){
       player.end=false;
-      player.xshift = 8500;
-      xshift= 8500;
+      player.xshift = 8600;
+      xshift = 8600;
       first=false;
+      player.x=100;
+      other = false;
       image(s1background.get(x+xshift, y, 900, 500), 0, 0);
     }
-    else if(x+xshift>=11600 && !stage2clear && !end){
-      player.end=false;
+    else if(gstate==0 && (x+xshift>=11600 && !stage2clear) || end==true){
       image(s1background.get(11600, y, 900, 500), 0, 0);
-      player.xshift-=7;
+      player.end=true;
+      if(player.xv==7){
+        player.xshift-=7;
+      }
+      if(player.xv==-7){
+        player.xshift+=7;
+      }
+      end = true;
+      if(player.x==100){
+        end = false;
+      }
+      if(player.x>=800){
+        stage2clear=true;
+        end = false;
+        first = true;
+      }
+      stage1clear=false;
     }
+    else if(stage2clear && first && !end && gstate==0){
+      player.end=true;
+      player.xshift = 8600;
+      xshift = 8600;
+      first=false;
+      player.x=100;
+      image(s2background, 0, 0);
+      gstate=1;
+    }
+    else if(gstate==1){
+      player.end=true;
+      image(s2background, 0, 0);
+      if(player.xv==7){
+        player.xshift-=7;
+      }
+      if(player.xv==-7){
+        player.xshift+=7;
+      }
+    }  
     else if(x+xshift>=0 && !end){
       player.end=false;
       image(s1background.get(x+xshift, y, 900, 500), 0, 0);
