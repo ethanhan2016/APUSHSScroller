@@ -16,11 +16,13 @@ class Stage {
   
   void checkPCollision(Player player){
     for(int a=0; a<platnumber; a++){
-      if(player.y <= parray[a].y && 100 >= parray[a].x-player.xshift && 100 <= parray[a].x-player.xshift+100){
+      if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift && player.x <= parray[a].x-player.xshift+parray[a].width){
         player.bottom = parray[a].y;
+        System.out.println("notok");
       }  
     }
     player.bottom = 455;
+    System.out.println("ok");
   }  
 
   void render(int x, int y, int xshift, Background background) {
