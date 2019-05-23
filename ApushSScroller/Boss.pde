@@ -41,7 +41,7 @@ class Boss {
   }
   
   
-  void update(Player player) {
+  void update(Player player, Stage stage) {
     shootingintervals+=1;
     shootingintervals2+=1;
     shootingdir+=rotatingspeed;
@@ -61,12 +61,9 @@ class Boss {
     shootingxv5=Math.cos(shootingdir5)*shootingradius;
     if(shootingintervals%15==0){
       Bossbullet bbullet = new Bossbullet(this.x+this.width/2, this.y + this.height/2, shootingxv, shootingyv, 5);
-      
       Bossbullet bbullet2 = new Bossbullet(this.x+this.width/2, this.y + this.height/2, shootingxv2, shootingyv2, 5);
-      
       Bossbullet bbullet3 = new Bossbullet(this.x+this.width/2, this.y + this.height/2, shootingxv3, shootingyv3, 5);
       Bossbullet bbullet4 = new Bossbullet(this.x+this.width/2, this.y + this.height/2, shootingxv4, shootingyv4, 5);
-      
       Bossbullet bbullet5 = new Bossbullet(this.x+this.width/2, this.y + this.height/2, shootingxv5, shootingyv5, 5);
       bbullets.add(bbullet);
       bbullets.add(bbullet2);
@@ -83,6 +80,18 @@ class Boss {
         bbullets.add(bbullet);
       }
     }
+    }
+    for(int i=0; i<bbullets.size(); i++){
+      if(bbullets.get(i).x>=player.x+5 && bbullets.get(i).x<=player.x+30 && bbullets.get(i).y<=player.y+44 && bbullets.get(i).y>=player.y){
+        bbullets.remove(i);
+        player.health-=2;
+      }  
+    }
+    for(int i=0; i<stage.bullets.size(); i++){
+      if(stage.bullets.get(i).x>=this.x+10 && stage.bullets.get(i).x<=this.x+this.width-10 && stage.bullets.get(i).y<=this.y+this.height && stage.bullets.get(i).y>=this.y){
+        stage.bullets.remove(i);
+        this.health-=stage.bullets.get(i).damage;
+      }  
     }
   }
 

@@ -110,7 +110,7 @@ class Stage {
     else{
       player.xshift=0;
       player.bottom =this.checkPCollision(player,parray1);
-      boss1.update(player);
+      boss1.update(player, this);
       boss1.render(player);
       for(int i=0; i<6; i++){
         parray1[i].display(0);
