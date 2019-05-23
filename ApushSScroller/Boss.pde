@@ -28,7 +28,7 @@ class Boss {
   double shootingyv4= 5;
   double shootingxv5 = 0;
   double shootingyv5 = 5;
-  int bulletdmg = 2;
+  int bulletdmg = 3;
   List<Bossbullet> bbullets = new ArrayList<Bossbullet>();
   
   Boss() {
@@ -84,7 +84,7 @@ class Boss {
     for(int i=0; i<bbullets.size(); i++){
       if(bbullets.get(i).x>=player.x+5 && bbullets.get(i).x<=player.x+30 && bbullets.get(i).y<=player.y+44 && bbullets.get(i).y>=player.y){
         bbullets.remove(i);
-        player.health-=2;
+        player.health-=bulletdmg;
       }  
     }
     for(int i=0; i<stage.bullets.size(); i++){
