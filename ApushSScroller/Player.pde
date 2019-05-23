@@ -48,7 +48,6 @@ class Player{
       } else {
         this.yv = 0;
       }
-      System.out.println("ok");
     }
     this.xv = 0;
     if (this.left == true || this.right == true) {
@@ -61,7 +60,6 @@ class Player{
     if(xshift>=0 || (xshift<=0 && this.xv>0)){
       xshift += this.xv;
     }
-    this.x += this.xv;
   }
   
   void render() {
