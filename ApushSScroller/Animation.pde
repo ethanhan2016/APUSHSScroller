@@ -8,7 +8,7 @@ class Animation {
 
     for (int i = 0; i < imageCount; i++) {
       String filename = imagePrefix + nf(i, 4) + ".png";
-      images[i] = loadImage("presidents/" + filename);
+      images[i] = loadImage("characters/" + filename);
     }
     
     this.width = images[0].width;

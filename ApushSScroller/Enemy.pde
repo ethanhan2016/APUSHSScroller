@@ -1,18 +1,15 @@
-
-class Player{
+class Enemy {
   int x, y, xv, yv, width, height;
   int health = 100;
-  int presidentNum = 0;
   int dir = 1;
-  int xshift;
-  int bottom;
+  int mapx;
   Animation eisenhower = new Animation("eisenhower", 2);
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
   Gun gun = new Gun(0);
   boolean left, right, up;
   float frame = 0.00f;
   
-  Player(int x, int y) {
+  Enemy(int x, int y) {
     this.width = this.eisenhower.width;
     this.height = this.eisenhower.height;
     this.x = x;
@@ -48,7 +45,6 @@ class Player{
       } else {
         this.yv = 0;
       }
-      System.out.println("ok");
     }
     this.xv = 0;
     if (this.left == true || this.right == true) {
@@ -58,21 +54,15 @@ class Player{
     } else {
       this.frame = 0;
     }
-    if(xshift>=0 || (xshift<=0 && this.xv>0)){
-      xshift += this.xv;
+    if(mapx>=0 || (mapx<=0 && this.xv>0)){
+      mapx += this.xv;
     }
     this.x += this.xv;
   }
   
-  void ccheck(Stage stage){
-    this.bottom = stage.checkPCollision(this);
-  }
-  
   void render() {
-     if (this.presidentNum == 0) {
       //this.eisenhower.display(this.x, this.y - this.height, this.dir, frame);
-      this.eisenhower.display(100, this.y-this.height, this.dir, frame);
-     }
+     this.eisenhower.display(100, this.y-this.height, this.dir, frame);
      //this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
      this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
      //this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);

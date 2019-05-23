@@ -1,10 +1,14 @@
 Player player;
+Stage stage;
+Background background;
 
 void settings() {
-  size(1800,1000);
+  size(900, 500);
 }
 void setup() {
-  player = new Player(100, 700);
+  player = new Player(100, 455);
+  background = new Background("ssbackground");
+  stage = new Stage(50);
 }
 
 void draw() {
@@ -14,6 +18,8 @@ void draw() {
   strokeWeight(1);
   line(0,700,1800,700);
   noStroke();
+  stage.render(0, 0, player.xshift, background);
+  player.ccheck(stage);
   player.update();
   player.render();
 }
