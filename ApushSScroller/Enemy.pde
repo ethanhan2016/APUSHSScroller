@@ -2,43 +2,42 @@ class Enemy {
   int x, y, xv, yv, width, height;
   int health = 100;
   int dir = 1;
-  int mapx;
-  Animation eisenhower = new Animation("eisenhower", 2);
-  Healthbar healthbar = new Healthbar(100, 0, 70, 8);
-  Gun gun = new Gun(0, 0.2);
+  int bottom;
+  boolean col;
+  boolean close = false;
+  Animation enemy = new Animation("scientist", 2);
+  Healthbar healthbar = new Healthbar(100, 1, 70, 8);
   boolean left, right, up;
   float frame = 0.00f;
   
   Enemy(int x, int y) {
-    this.width = this.eisenhower.width;
-    this.height = this.eisenhower.height;
+    this.width = this.enemy.width;
+    this.height = this.enemy.height;
     this.x = x;
     this.y = y;
   }
   
-  boolean setMove(int k, boolean b) {
-    switch (k) {
-    case 'W':
-    case UP:
-      return up = b;
- 
-    case 'A':
-    case LEFT:
-      return left = b;
- 
-    case 'D':
-    case RIGHT:
-      return right = b;
- 
-    default:
-      return b;
-    }
-  }
   
-  void update() {
+  void update(Player player) {
+    this.right=false;
+    this.left=false;
+    this.up=false;
+    if(!col){
+      if(player.x>=this.x-player.xshift-700 && player.x<=this.x-player.xshift+700){
+        if(player.x>=this.x-player.xshift){
+          this.right=true;
+        }
+        else if(player.x<=this.x-player.xshift){
+          this.left=true;
+        }
+        if(player.y<this.y-10){
+          this.up=true;
+        }
+      }
+    }  
     this.yv += 2;
     this.y += this.yv;
-    if (this.y > 460) {
+    if (this.y > bottom) {
       this.y -= yv;
       if (this.up == true) {
         this.yv = -30;
@@ -48,24 +47,37 @@ class Enemy {
     }
     this.xv = 0;
     if (this.left == true || this.right == true) {
-      this.xv = (this.right) ? 7 : -7;
+      this.xv = (this.right) ? 2 : -2;
       this.dir = (this.right) ? 1 : 0;
       this.frame += 0.15;
     } else {
       this.frame = 0;
     }
-    if(mapx>=0 || (mapx<=0 && this.xv>0)){
-      mapx += this.xv;
-    }
-    this.x += this.xv;
+    this.x+=this.xv;
+    col=false;
   }
   
+  boolean checkCollisionOther(Enemy enemy, Player player){
+    if(enemy.x-player.xshift<=this.x-player.xshift+this.width+10 && enemy.x-player.xshift>=this.x-player.xshift-this.width-10 && (checkCollisionPlayer(player) || enemy.close || enemy.checkCollisionPlayer(player))){
+      this.close=true;
+      return true;
+    }
+    this.close=false;
+    return false;
+  }  
+  
+  boolean checkCollisionPlayer(Player player){
+    if(player.x>=this.x-player.xshift-10 && player.x<=this.x-player.xshift+10+this.width){
+      this.close=true;
+      return true;
+    }
+    this.close=false;
+    return false;
+  }  
   void render() {
-      //this.eisenhower.display(this.x, this.y - this.height, this.dir, frame);
-     this.eisenhower.display(100, this.y-this.height, this.dir, frame);
-     //this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
-     this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
-     //this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
-     //this.gun.render(100 + this.width/2, this.y - this.height/2, this.dir);
+     this.enemy.display(this.x-player.xshift, this.y - this.height, this.dir, frame);
+     //this.enemy.display(100, this.y-this.height, this.dir, frame);
+     this.healthbar.render(this.health, this.x-player.xshift + this.width/2, this.y - this.height);
+     //this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
   }
 }

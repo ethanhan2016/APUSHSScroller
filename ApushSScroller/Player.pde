@@ -10,6 +10,7 @@ class Player{
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
   Gun gun = new Gun(1, 3);
   boolean left, right, up;
+  boolean end = false;
   float frame = 0.00f;
   
   Player(int x, int y) {
@@ -66,11 +67,13 @@ class Player{
     if(xshift>=0 || (xshift<=0 && this.xv>0)){
       xshift += this.xv; 
     }
+    if(end && this.x>=0 && this.x <=900-this.width){
+      this.x+=this.xv;
+    }
     this.gun.update(100 + this.width/2, this.y - this.height/2);
     if(mousePressed) {
       this.fire(bullets);
     }
-    
   }
   
   void render() {
