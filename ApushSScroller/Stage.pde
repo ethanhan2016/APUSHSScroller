@@ -53,9 +53,9 @@ class Stage {
       parray[j].display(player.xshift);
     }
     for(int i=0; i<enumber; i++){
-      enemy.bottom = this.checkECollision(enemy);
-      enemy.update(player);
-      enemy.render();
+      earray[i].bottom = this.checkECollision(earray[i]);
+      earray[i].update(player);
+      earray[i].render();
     }
   }
   
