@@ -2,12 +2,15 @@ Platform platform;
 Enemy enemyclass;
 Boss boss1;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 class Stage {
   Platform[] parray;
   Enemy[] earray;
   int enumber;
   int platnumber;
+  List<Bullet> bullets = new ArrayList<Bullet>();
   Random rnd = new Random();
   
   Stage(int platnumber, int enumber) {
@@ -21,6 +24,16 @@ class Stage {
     for(int i=0; i<enumber; i++){
       earray[i] = new Enemy(rnd.nextInt(12500), rnd.nextInt(300)+150);
     }  
+  }
+  
+  void updateBullets() {
+    for (int i = 0; i < this.bullets.size(); i++) {
+      bullets.get(i).update();
+      bullets.get(i).render();
+      if(bullets.get(i).isOffScreen(900, 500)) {
+        bullets.remove(i);
+      }
+    }
   }
   
   int checkPCollision(Player player){

@@ -8,7 +8,7 @@ class Player{
   int bottom;
   Animation eisenhower = new Animation("eisenhower", 2);
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
-  Gun gun = new Gun(0);
+  Gun gun = new Gun(1, 3);
   boolean left, right, up;
   boolean end = false;
   float frame = 0.00f;
@@ -39,7 +39,13 @@ class Player{
     }
   }
   
-  void update() {
+  void fire(List<Bullet> bullets) {
+    if(this.gun.cooldown == 0) {
+      this.gun.fire(bullets);
+    }
+  }
+  
+  void update(List<Bullet> bullets) {
     this.yv += 2;
     this.y += this.yv;
     if (this.y >= bottom) {
@@ -59,19 +65,22 @@ class Player{
       this.frame = 0;
     }
     if(xshift>=0 || (xshift<=0 && this.xv>0)){
-      xshift += this.xv;
+      xshift += this.xv; 
     }
     if(end && this.x>=0 && this.x <=900-this.width){
       this.x+=this.xv;
     }
+    this.gun.update(100 + this.width/2, this.y - this.height/2);
+    if(mousePressed) {
+      this.fire(bullets);
+    }
   }
   
   void render() {
-      //this.eisenhower.display(this.x, this.y - this.height, this.dir, frame);
-     this.eisenhower.display(this.x, this.y-this.height, this.dir, frame);
-     //this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
-     this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
-     //this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
-     this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
+     if (this.presidentNum == 0) {
+      this.eisenhower.display(100, this.y-this.height, this.dir, frame);
+     }
+     this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+     this.gun.render(this.dir);
   }
 }

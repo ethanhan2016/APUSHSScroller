@@ -1,21 +1,61 @@
+import java.util.Random;
+
 class Gun {
-  PImage gunImage;
-  int type, height, width;
+  PImage[] gunImages;
+  int type, height, width, x, y;
+  float cooldown;
+  Random rnd = new Random();
   
-  Gun(int type) {
+  Gun(int type, float cooldown) {
     this.type = type;
-    this.gunImage = loadImage("guns/gun" + nf(type, 4) + ".png");
+    this.cooldown = cooldown;
+    this.gunImages = new PImage[3];
+      for(int i = 0; i < 3; i++) {
+        gunImages[i] = loadImage("guns/gun" + nf(i, 4) + ".png");
+      }
     
-    this.width = this.gunImage.width;
-    this.height = this.gunImage.height;
+    this.width = this.gunImages[this.type].width;
+    this.height = this.gunImages[this.type].height;
   }
   
-  void render(int x, int y, int dir) {
+  void update(int x, int y) {
+    this.x = x;
+    this.y = y;
+    this.cooldown -= 0.2;
+    if (this.cooldown < 0) {
+      this.cooldown = 0;
+    }
+  }
+  
+  void switchWeapons(int type) {
+    this.type = type;
+  }
+    
+  void render(int dir) {
     pushMatrix();
-    translate(x, y);
+    translate(this.x, this.y);
     scale((2*dir-1) * 0.17, 0.17);
-    translate(-x, -y);
-    image(this.gunImage, x-110, y+45);
+    translate(-this.x, -this.y);
+    image(this.gunImages[this.type], this.x-110, this.y+45);
     popMatrix();
+  }
+  
+  void fire(List<Bullet> bullets) {
+    if(this.type == 0) {
+      Bullet bullet = new Bullet(0, this.x, this.y, 20, 0, this.type);
+      bullets.add(bullet);
+      this.cooldown = 3;
+    } else if (this.type == 1) {
+      print("ok \n");
+      for (int i = 0; i < 5; i++) {
+        Bullet bullet = new Bullet(0, this.x, this.y, 20, rnd.nextInt(6)-1, this.type);
+        bullets.add(bullet);
+      }
+      this.cooldown = 8;
+    } else if (this.type == 2) {
+      Bullet bullet = new Bullet(0, this.x, this.y, 30, 0, this.type);
+      bullets.add(bullet);
+      this.cooldown = 12;
+    }
   }
 }
