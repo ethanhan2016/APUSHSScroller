@@ -89,8 +89,8 @@ class Boss {
     }
     for(int i=0; i<stage.bullets.size(); i++){
       if(stage.bullets.get(i).x>=this.x+10 && stage.bullets.get(i).x<=this.x+this.width-10 && stage.bullets.get(i).y<=this.y+this.height && stage.bullets.get(i).y>=this.y){
-        stage.bullets.remove(i);
         this.health-=stage.bullets.get(i).damage;
+        stage.bullets.remove(i);
       }  
     }
   }
