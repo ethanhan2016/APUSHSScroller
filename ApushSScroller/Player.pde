@@ -10,6 +10,7 @@ class Player{
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
   Gun gun = new Gun(0);
   boolean left, right, up;
+  boolean end = false;
   float frame = 0.00f;
   
   Player(int x, int y) {
@@ -60,16 +61,17 @@ class Player{
     if(xshift>=0 || (xshift<=0 && this.xv>0)){
       xshift += this.xv;
     }
+    if(end && this.x>=0 && this.x <=900-this.width){
+      this.x+=this.xv;
+    }
   }
   
   void render() {
-     if (this.presidentNum == 0) {
       //this.eisenhower.display(this.x, this.y - this.height, this.dir, frame);
-      this.eisenhower.display(100, this.y-this.height, this.dir, frame);
-     }
+     this.eisenhower.display(this.x, this.y-this.height, this.dir, frame);
      //this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
-     this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
+     this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
      //this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
-     this.gun.render(100 + this.width/2, this.y - this.height/2, this.dir);
+     this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
   }
 }

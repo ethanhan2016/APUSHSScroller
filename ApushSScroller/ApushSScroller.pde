@@ -16,9 +16,6 @@ void setup() {
 void draw() {
   clear();
   background(255);
-  stroke(0);
-  strokeWeight(1);
-  line(0,700,1800,700);
   noStroke();
   stage.render(0, 0, player.xshift, background, player);
   player.bottom = stage.checkPCollision(player);

@@ -26,8 +26,6 @@ class Stage {
     int maxY = 455;
     for(int a=0; a<platnumber; a++){
       if(player.y <= parray[a].y && player.x >= parray[a].x-player.xshift-player.width && player.x <= parray[a].x-player.xshift+parray[a].width){
-        //System.out.println("notok");
-        //return(parray[a].y);
         maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
       }  
     }
@@ -47,7 +45,7 @@ class Stage {
   
   
   void render(int x, int y, int xshift, Background background, Player player) {
-    background.display(x, y, xshift);
+    background.display(x, y, xshift, player);
     for(int j=0; j<platnumber; j++){
       parray[j].display(player.xshift);
     }
@@ -56,7 +54,6 @@ class Stage {
       for(int j=0; j<enumber; j++){
         if(earray[i].checkCollisionOther(earray[j],player)==true && !(i==j)){
           earray[i].col=true;
-          println("huh");
         }
       }
       earray[i].update(player);

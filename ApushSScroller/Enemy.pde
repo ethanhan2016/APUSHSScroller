@@ -19,7 +19,6 @@ class Enemy {
   
   
   void update(Player player) {
-    println(this.x);
     this.right=false;
     this.left=false;
     this.up=false;
