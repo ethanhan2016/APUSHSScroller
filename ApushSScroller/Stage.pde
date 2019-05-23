@@ -1,17 +1,30 @@
 Platform platform;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 class Stage {
   Platform[] parray;
   int platnumber;
+  List<Bullet> bullets = new ArrayList<Bullet>();
   Random rnd = new Random();
   
   Stage(int platnumber) {
     this.platnumber = platnumber;
     parray = new Platform[platnumber];
-    for(int i=0; i<platnumber; i++){
+    for(int i=0; i < platnumber; i++){
       parray[i] = new Platform("ssplatforms", rnd.nextInt(16500), rnd.nextInt(300)+150);
     }  
+  }
+  
+  void updateBullets() {
+    for (int i = 0; i < this.bullets.size(); i++) {
+      bullets.get(i).update();
+      bullets.get(i).render();
+      if(bullets.get(i).isOffScreen(900, 500)) {
+        bullets.remove(i);
+      }
+    }
   }
   
   int checkPCollision(Player player){
@@ -23,7 +36,6 @@ class Stage {
         maxY = (parray[a].y < maxY) ? parray[a].y : maxY;
       }  
     }
-    System.out.println("ok");
     return(maxY);
   }  
 

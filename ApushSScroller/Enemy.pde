@@ -5,7 +5,7 @@ class Enemy {
   int mapx;
   Animation eisenhower = new Animation("eisenhower", 2);
   Healthbar healthbar = new Healthbar(100, 0, 70, 8);
-  Gun gun = new Gun(0);
+  Gun gun = new Gun(0, 0.2);
   boolean left, right, up;
   float frame = 0.00f;
   
@@ -66,6 +66,6 @@ class Enemy {
      //this.healthbar.render(this.health, this.x + this.width/2, this.y - this.height);
      this.healthbar.render(this.health, 100 + this.width/2, this.y - this.height);
      //this.gun.render(this.x + this.width/2, this.y - this.height/2, this.dir);
-     this.gun.render(100 + this.width/2, this.y - this.height/2, this.dir);
+     //this.gun.render(100 + this.width/2, this.y - this.height/2, this.dir);
   }
 }

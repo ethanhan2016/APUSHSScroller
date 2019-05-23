@@ -20,8 +20,9 @@ void draw() {
   noStroke();
   stage.render(0, 0, player.xshift, background);
   player.bottom = stage.checkPCollision(player);
-  player.update();
+  player.update(stage.bullets);
   player.render();
+  stage.updateBullets();
 }
 
 void keyPressed() {
@@ -29,6 +30,19 @@ void keyPressed() {
   if(key == 'j') {
     player.dir = 1 - player.dir;
   }
+  if(keyCode == 32) {
+    player.fire(stage.bullets);
+  }
+  if(key == '1') {
+    player.gun.switchWeapons(0);
+  }
+  if(key == '2') {
+    player.gun.switchWeapons(1);
+  }
+  if(key == '3') {
+    player.gun.switchWeapons(2);
+  }
+  
 }
 
 void keyReleased() {
