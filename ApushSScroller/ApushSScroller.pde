@@ -22,7 +22,7 @@ void setup() {
   player = new Player(100, 455, gunSounds);
   enemy = new Enemy(300, 455);
   background = new Background("ssbackground");
-  stage = new Stage(15, 30);
+  stage = new Stage(15, 5);
 }
 
 void draw() {
